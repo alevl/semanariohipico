@@ -48,4 +48,5 @@ class Carrera extends Model
     {
         return $this->belongsTo(TipoApuesta::class, 'apuesta_id');
     }
+
 }

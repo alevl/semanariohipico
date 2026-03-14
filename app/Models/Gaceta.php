@@ -21,4 +21,5 @@ class Gaceta extends Model
     {
         return $this->belongsTo(Hipodromo::class, 'hipodromo_id');
     }
+
 }

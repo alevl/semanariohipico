@@ -3,11 +3,13 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    use WithoutModelEvents;
+
     /**
      * Seed the application's database.
      */
@@ -42,9 +44,8 @@ class DatabaseSeeder extends Seeder
         \App\Models\Origene::create(['origen'=>'Taquilla']);
         \App\Models\Origene::create(['origen'=>'Online']);
 
-        \App\Models\Nivele::create(['nivel'=>'Admin']);
-        \App\Models\Nivele::create(['nivel'=>'Banquero']);
         \App\Models\Nivele::create(['nivel'=>'Usuario']);
+        \App\Models\Nivele::create(['nivel'=>'Admin']);
         \App\Models\Nivele::create(['nivel'=>'Taquilla']);
 
         \App\Models\EstatusUsuario::create(['estatus'=>'Activo']);
@@ -55,6 +56,17 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\EstatusRecarga::create(['estatus'=>'Pendiente']);
         \App\Models\EstatusRecarga::create(['estatus'=>'Procesado']);
+
+        \App\Models\EstatusPolla::create(['estatus'=>'Preparando']);
+        \App\Models\EstatusPolla::create(['estatus'=>'Abierta']);
+        \App\Models\EstatusPolla::create(['estatus'=>'En Juego']);
+        \App\Models\EstatusPolla::create(['estatus'=>'Finalizada']);
+        \App\Models\EstatusPolla::create(['estatus'=>'Participando']);
+
+        \App\Models\EstatusRemate::create(['estatus'=>'Preparando']);
+        \App\Models\EstatusRemate::create(['estatus'=>'Abierto']);
+        \App\Models\EstatusRemate::create(['estatus'=>'Cerrado']);
+        \App\Models\EstatusRemate::create(['estatus'=>'Finalizado']);
 
         \App\Models\EstatusTicket::create(['estatus'=>'Pendiente']);
         \App\Models\EstatusTicket::create(['estatus'=>'Apostado']);
@@ -1006,9 +1018,8 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::create(['name'=>'Alejandro',
         'username'=>'alejandro',
         'password'=>'$2y$10$P7g2rGQ9aXM6qgJAgOmecuV5LwBNUC4d2bqtRU5RRbPIpi61mdTEW',
-        'nivel_id'=>1,
+        'nivel_id'=>3,
         'estatus_id'=>1,
-        'banquero_id'=>1,
         'propietario_id'=>1,
         'moneda_id'=>1,
         'trato_id'=>1,
@@ -1018,22 +1029,9 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::create(['name'=>'Nestor',
         'username'=>'nestor',
         'password'=>'$2y$10$P7g2rGQ9aXM6qgJAgOmecuV5LwBNUC4d2bqtRU5RRbPIpi61mdTEW',
-        'nivel_id'=>1,
-        'estatus_id'=>1,
-        'banquero_id'=>1,
-        'propietario_id'=>1,
-        'moneda_id'=>1,
-        'trato_id'=>1,
-        'cod_pais'=>'+58',
-        ]);
-
-        \App\Models\User::create(['name'=>'Banquero',
-        'username'=>'banquero',
-        'password'=>'$2y$10$P7g2rGQ9aXM6qgJAgOmecuV5LwBNUC4d2bqtRU5RRbPIpi61mdTEW',
         'nivel_id'=>2,
-        'propietario_id'=>1,
         'estatus_id'=>1,
-        'banquero_id'=>1,
+        'propietario_id'=>1,
         'moneda_id'=>1,
         'trato_id'=>1,
         'cod_pais'=>'+58',
@@ -1042,23 +1040,10 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::create(['name'=>'Usuario',
         'username'=>'usuario',
         'password'=>'$2y$10$P7g2rGQ9aXM6qgJAgOmecuV5LwBNUC4d2bqtRU5RRbPIpi61mdTEW',
-        'nivel_id'=>3,
+        'nivel_id'=>1,
         'estatus_id'=>1,
-        'banquero_id'=>3,
-        'propietario_id'=>3,
+        'propietario_id'=>2,
         'moneda_id'=>1,
-        'trato_id'=>1,
-        'cod_pais'=>'+58',
-        ]);
-
-        \App\Models\User::create(['name'=>'Taquilla',
-        'username'=>'taquilla',
-        'banquero_id'=>3,
-        'propietario_id'=>3, 
-        'moneda_id'=>2,
-        'password'=>'$2y$10$P7g2rGQ9aXM6qgJAgOmecuV5LwBNUC4d2bqtRU5RRbPIpi61mdTEW',
-        'nivel_id'=>4,
-        'estatus_id'=>1,
         'trato_id'=>1,
         'cod_pais'=>'+58',
         ]);
@@ -1415,8 +1400,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\Tope::create([
-        'banquero_id'=>3,
-        'taquilla_id'=>4,
+        'taquilla_id'=>1,
         'moneda_id'=>1,
         'apuesta_minima'=>20,
         'apuesta_maxima'=>100,
@@ -1425,8 +1409,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\Tope::create([
-        'banquero_id'=>3,
-        'taquilla_id'=>4,
+        'taquilla_id'=>1,
         'moneda_id'=>2,
         'apuesta_minima'=>2,
         'apuesta_maxima'=>7,
@@ -1455,8 +1438,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\RegaliasNacionale::create([
-        'banquero_id'=>3,
-        'taquilla_id'=>4,
+        'taquilla_id'=>1,
         'i_caso1'=>20,
         'f_caso1'=>36.1,
         'modo1'=>'IGUAL',
@@ -1480,8 +1462,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\RegaliasInternacionale::create([
-        'banquero_id'=>3,
-        'taquilla_id'=>4,
+        'taquilla_id'=>1,
         'i_caso1'=>2,
         'f_caso1'=>50,
         'modo1'=>'MAS',
@@ -1672,6 +1653,22 @@ class DatabaseSeeder extends Seeder
         'numero_ejemplar'=>15,
         'fecha_carrera'=>date('d/m/Y'),
         ]);
+
+        \App\Models\RematesParametro::create([
+        'moneda_id'=>2,
+        'caso1_i'=>0,
+        'caso1_f'=>1,
+        'caso1_m'=>0.5,
+        'caso2_i'=>1.1,
+        'caso2_f'=>2,
+        'caso2_m'=>0.7,
+        'caso3_i'=>2.1,
+        'caso3_f'=>5,
+        'caso3_m'=>1,
+        'caso4_i'=>5.1,
+        'caso4_f'=>99999,
+        'caso4_m'=>1.2,
+        ]);
+
     }
 }
-

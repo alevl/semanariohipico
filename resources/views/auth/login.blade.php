@@ -1,64 +1,72 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Iniciar Sesión</title>
-  <link rel="shortcut icon" href="{{ asset('storage/sistema/favicon.png') }}" type="image/x-icon">
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<title>Login - Semanario Hípico</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+:root{
+    --principal:#0F3D2E;
+    --secundario:#D4A017;
+}
+body{
+    font-family: 'Poppins', sans-serif;
+}
+</style>
 </head>
-<body class="h-screen bg-gray-100 font-sans">
 
-  <!-- Fondo con imagen -->
-  <div class="relative h-full w-full bg-cover bg-center" style="background-image: url({{ asset('storage/sistema/login.jpg') }});">
-    <div class="absolute inset-0 bg-black bg-opacity-50"></div> <!-- Capa oscura -->
+<body class="bg-gradient-to-r from-[#0F3D2E] to-[#1F6F4A] h-screen flex items-center justify-center">
 
-    <!-- Contenedor centrado -->
-    <div class="relative flex items-center justify-center h-full p-4">
-      <div class="w-full max-w-md bg-white bg-opacity-90 backdrop-blur-md shadow-lg rounded-2xl p-8">
-        
-        <img class="text-center" src="{{ asset('storage/sistema/logo.png') }}" />
-        
-        <!-- Título -->
-        <h1 class="text-2xl font-bold text-center text-green-800 mb-4 mt-4">
-          Iniciar Sesión
-        </h1>
-        
-        <!-- Formulario -->
-        <form method="POST" action="{{ route('acceso') }}">
-          @csrf
-          <x-validation-errors class="mb-4" />
-          <div class="mb-4">
-            <label class="block text-gray-600 text-sm mb-2">Usario</label>
-            <input type="type" id="username" name="username" placeholder="alejandro" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-800">
-          </div>
+<div class="bg-white rounded-2xl shadow-lg w-full max-w-md p-8">
 
-          <div class="mb-4">
-            <label class="block text-gray-600 text-sm mb-2">Contraseña</label>
-            <input type="password" name="password" id="password" placeholder="********" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-800">
-          </div>
+{{-- LOGO --}}
+<div class="flex justify-center mb-6">
+    <img src="{{ asset('storage/sistema/logo.png') }}" alt="Semanario Hípico" class="h-24 w-auto">
+</div>
 
-          <div class="flex items-center justify-between mb-6">
-            <label class="flex items-center text-sm text-gray-600">
-              <input type="checkbox" class="mr-2"> Recordarme
-            </label>
-            <a href="#" class="text-sm text-green-800 hover:underline">¿Olvidaste tu contraseña?</a>
-          </div>
+<h2 class="text-2xl font-bold text-center text-[#0F3D2E] mb-8">
+Bienvenido a Semanario Hípico
+</h2>
 
-          <button type="submit"
-            class="w-full bg-green-800 hover:bg-green-600 text-white font-bold py-2 rounded-lg transition">
-            Ingresar
-          </button>
-        </form>
+<x-validation-errors class="mb-4" />
+<form method="POST" action="{{ route('acceso.acceso') }}" class="space-y-5">
+    @csrf
 
-        <!-- Enlace a registro -->
-        <p class="text-center text-sm text-gray-600 mt-6">
-          ¿No tienes cuenta?
-          <a href="{{ route('register') }}" class="text-green-800 hover:underline font-semibold">Regístrate</a>
-        </p>
-      </div>
+    <div>
+        <label class="block text-gray-700 font-semibold mb-2">Usuario</label>
+        <input type="text" name="username" value="{{ old('username') }}"
+               class="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4A017]"
+               placeholder="pedro" required autofocus>
     </div>
-  </div>
+
+    <div>
+        <label class="block text-gray-700 font-semibold mb-2">Contraseña</label>
+        <input type="password" name="password"
+               class="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4A017]"
+               placeholder="********" required>
+    </div>
+
+    <div class="flex items-center justify-between">
+        <label class="inline-flex items-center text-gray-700">
+            <input type="checkbox" name="remember" class="form-checkbox h-4 w-4 text-[#D4A017]">
+            <span class="ml-2">Recordarme</span>
+        </label>
+
+        <a href="{{ route('password.request') }}" class="text-sm text-[#D4A017] hover:underline">
+            ¿Olvidaste tu contraseña?
+        </a>
+    </div>
+
+    <button type="submit"
+            class="w-full bg-[#D4A017] text-white font-bold py-2 rounded-lg hover:bg-[#F2C94C] transition">
+        Iniciar sesión
+    </button>
+</form>
+
+
+</div>
 
 </body>
 </html>

@@ -16,4 +16,5 @@ class CarrerasDetalle extends Model
         'numero_ejemplar',
         'fecha_carrera',
     ];
+
 }

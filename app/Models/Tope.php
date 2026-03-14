@@ -24,4 +24,5 @@ class Tope extends Model
     {
         return $this->belongsTo(Moneda::class, 'moneda_id');
     }
+
 }

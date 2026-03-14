@@ -34,4 +34,5 @@ class RegaliasInternacionale extends Model
         'modo4',
         'modo5',
     ];
+
 }

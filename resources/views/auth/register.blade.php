@@ -1,68 +1,60 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro</title>
-  <link rel="shortcut icon" href="{{ asset('storage/sistema/favicon.png') }}" type="image/x-icon">
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="h-screen bg-gray-100 font-sans">
+<x-guest-layout>
+    <x-authentication-card>
+        <x-slot name="logo">
+            <x-authentication-card-logo />
+        </x-slot>
 
-  <!-- Fondo con imagen -->
-  <div class="relative h-full w-full bg-cover bg-center" style="background-image: url({{ asset('storage/sistema/login.jpg') }});">
-    <div class="absolute inset-0 bg-black bg-opacity-50"></div> <!-- Capa oscura -->
+        <x-validation-errors class="mb-4" />
 
-    <!-- Contenedor centrado -->
-    <div class="relative flex items-center justify-center h-full p-4">
-      <div class="w-full max-w-md bg-white bg-opacity-90 backdrop-blur-md shadow-lg rounded-2xl p-8">
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
 
-        <img class="text-center" src="{{ asset('storage/sistema/logo.png') }}" />
-        
-        <!-- Título -->
-        <h1 class="text-2xl font-bold text-center text-green-800 mb-4 mt-4">
-          Crear Cuenta
-        </h1>
-        
-        <!-- Formulario -->
-        <form method="POST" action="{{ route('registro') }}">
-          @csrf
-          <x-validation-errors class="mb-4" />
+            <div>
+                <x-label for="name" value="{{ __('Name') }}" />
+                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            </div>
 
-          <div class="mb-4">
-            <label class="block text-gray-600 text-sm mb-2">Nombre completo</label>
-            <input type="text" placeholder="Tu nombre" id="name" name="name" value="{{ old('name') }}"  class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-          </div>
+            <div class="mt-4">
+                <x-label for="email" value="{{ __('Email') }}" />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            </div>
 
-          <div class="mb-4">
-            <label class="block text-gray-600 text-sm mb-2">Usuario</label>
-            <input type="type" id="username" name="username" placeholder="alejandro" value="{{ old('username') }}" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-          </div>
+            <div class="mt-4">
+                <x-label for="password" value="{{ __('Password') }}" />
+                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+            </div>
 
-          <div class="mb-4">
-            <label class="block text-gray-600 text-sm mb-2">Contraseña</label>
-            <input type="password" placeholder="********" id="password" name="password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-          </div>
+            <div class="mt-4">
+                <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
+                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+            </div>
 
-          <div class="mb-6">
-            <label class="block text-gray-600 text-sm mb-2">Confirmar contraseña</label>
-            <input type="password" placeholder="********"  id="password2" name="password2" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-          </div>
+            @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
+                <div class="mt-4">
+                    <x-label for="terms">
+                        <div class="flex items-center">
+                            <x-checkbox name="terms" id="terms" required />
 
-          <button type="submit"
-            class="w-full bg-green-800 hover:bg-green-600 text-white font-bold py-2 rounded-lg transition">
-            Registrarse
-          </button>
+                            <div class="ms-2">
+                                {!! __('I agree to the :terms_of_service and :privacy_policy', [
+                                        'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Terms of Service').'</a>',
+                                        'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Privacy Policy').'</a>',
+                                ]) !!}
+                            </div>
+                        </div>
+                    </x-label>
+                </div>
+            @endif
+
+            <div class="flex items-center justify-end mt-4">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
+                    {{ __('Already registered?') }}
+                </a>
+
+                <x-button class="ms-4">
+                    {{ __('Register') }}
+                </x-button>
+            </div>
         </form>
-
-        <!-- Enlace a login -->
-        <p class="text-center text-sm text-gray-600 mt-6">
-          ¿Ya tienes cuenta?
-          <a href="{{ route('login') }}" class="text-green-800 hover:underline font-semibold">Inicia sesión</a>
-        </p>
-      </div>
-    </div>
-  </div>
-
-</body>
-</html>
+    </x-authentication-card>
+</x-guest-layout>

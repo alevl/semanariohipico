@@ -34,4 +34,5 @@ class RegaliasNacionale extends Model
         'modo4',
         'modo5',
     ];
+
 }

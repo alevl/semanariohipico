@@ -20,4 +20,5 @@ class Pronostico extends Model
         'tercera_marca',
         'cuarta_marca',
     ];
+
 }

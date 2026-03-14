@@ -22,4 +22,5 @@ class Precio extends Model
     {
         return $this->belongsTo(Moneda::class, 'moneda_id');
     }
+
 }

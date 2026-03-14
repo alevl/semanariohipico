@@ -3,6 +3,7 @@
 namespace App\Livewire\Usuario;
 
 use Livewire\Component;
+use App\Models\User;
 use App\Models\Transmisione;
 
 class Transmisiones extends Component
@@ -17,11 +18,13 @@ class Transmisiones extends Component
 
     public function render()
     {
+        $usuario = User::where('id', auth()->user()->id)->first();
+
         $transmisiones = Transmisione::where('fecha_invertida', $this->fecha_invertida)->get();
 
-        return view('livewire.usuario.transmisiones', compact('transmisiones'));
+        return view('livewire.usuario.transmisiones', compact('usuario'))->with('transmisiones', $transmisiones);
     }
-
+    
     public function seleccionar_canal($canal, $pantalla)
     {
         if($pantalla == 1)

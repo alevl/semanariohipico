@@ -18,5 +18,5 @@ class UserMovimiento extends Model
         'monto',
         'descripcion',
         'referencia',
-    ];
+    ];  
 }

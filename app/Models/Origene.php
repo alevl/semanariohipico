@@ -9,8 +9,4 @@ class Origene extends Model
 {
     /** @use HasFactory<\Database\Factories\OrigeneFactory> */
     use HasFactory;
-
-    protected $fillable = [
-        'origen',
-    ];
 }

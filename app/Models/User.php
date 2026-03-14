@@ -75,29 +75,4 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    public function usuario_estatus()
-    {
-        return $this->belongsTo(EstatusUsuario::class, 'estatus_id');
-    }
-
-    public function usuario_banquero()
-    {
-        return $this->belongsTo(User::class, 'banquero_id');
-    }
-
-    public function usuario_moneda()
-    {
-        return $this->belongsTo(Moneda::class, 'moneda_id');
-    }
-
-    public function usuario_propietario()
-    {
-        return $this->belongsTo(User::class, 'propietario_id');
-    }
-
-    public function usuario_trato()
-    {
-        return $this->belongsTo(Trato::class, 'trato_id');
-    }
 }

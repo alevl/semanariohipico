@@ -107,4 +107,5 @@ class CarrerasJugada extends Model
     {
         return $this->belongsTo(User::class, 'taquilla_id');
     }
+
 }
