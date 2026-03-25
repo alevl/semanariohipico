@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Livewire\Usuario;
+namespace App\Livewire\Admin;
 
 use Livewire\Component;
 use App\Models\User;
 use App\Models\Polla;
 use App\Models\PollasInscrita;
 
-class PollasPosiciones extends Component
+class PollasPosicionesAdmin extends Component
 {
     public $primer_lugar=0, $segundo_lugar=0, $tercer_lugar=0;
 
     public function mount($id_polla)
     {
-        if(auth()->user()->nivel_id <> 1)
+        if(auth()->user()->nivel_id <> 2)
         {
             session()->flush();
             return redirect()->route('login');
@@ -23,8 +23,6 @@ class PollasPosiciones extends Component
 
     public function render()
     {
-        $usuario = User::where('id', auth()->user()->id)->first();
-
         $polla = Polla::select('pollas.*', 'hipodromos.*', 'pollas.id as id')
         ->join('hipodromos', 'hipodromos.id', 'pollas.hipodromo_id')
         ->where('pollas.id', $this->id_polla)->first();
@@ -68,6 +66,8 @@ class PollasPosiciones extends Component
             }
         }
 
-        return view('livewire.usuario.pollas-posiciones', compact('usuario'))->with('polla', $polla)->with('posiciones', $posiciones)->with('podio', $podio);
-    }   
+        return view('livewire.admin.pollas-posiciones-admin')->with('polla', $polla)->with('posiciones', $posiciones)->with('podio', $podio);
+    }
+
+    
 }

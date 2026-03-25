@@ -1,26 +1,36 @@
 <div>
-    <x-layouts.menu-usuario>
-        <div class="bg-white shadow p-4 flex justify-between items-center">
+    <x-layouts.menu-admin>
+        <div class="min-h-screen bg-[#f5f5f5] p-6">
+            <button id="menuBtn" class="lg:hidden text-2xl">☰</button>
+            <button id="menuBtn" class="lg:hidden text-2xl">☰</button>
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-800">Tabla</h1>
+                <span class="px-4 py-2 text-sm">
+                </span>
+            </div>
             <div class="flex items-center gap-4">
-                <button id="menuBtn" class="lg:hidden text-2xl">
-                    ☰
-                </button>
-
-                <h1 class="font-bold text-[#0F3D2E]">
-                    Remate Hípico
-                </h1>
+                <span class="text-gray-500">
+                    {{ $polla->hipodromo . ' (' . $polla->fecha . ')' }}
+                </span>
             </div>
-            <div class="flex items-center gap-6">
-                <div class="bg-[#D4A017] text-white px-3 py-1 rounded font-semibold">
-                    {{ "💰 $" . number_format($usuario->monedero, 0) }}
-                </div>
+            <div class="bg-white rounded shadow p-6 flex flex-col md:flex-row md:justify-between gap-4">
                 <div>
-                    {{ $usuario->name }}
+                    <h2 class="text-xl font-bold text-[#0F3D2E]">
+                        {{ $informacion_polla->hipodromo }}
+                    </h2>
+                    <p class="text-gray-500">
+                        {{ $informacion_polla->fecha }}
+                    </p>
+                </div>
+                <div class="text-right">
+                    <p class="text-gray-500">
+                        Premio acumulado
+                    </p>
+                    <div class="text-3xl font-bold text-[#D4A017]">
+                        {{ "$" . number_format($informacion_polla->monto_pagar, 0) }}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="p-4 space-y-6">
-
             <div wire:poll.1000ms class="bg-white shadow rounded p-6 text-center">
                 <h2 class="text-lg font-bold mb-2 text-[#0F3D2E]">
                     ⏳ Cierre del remate
@@ -34,6 +44,7 @@
                     @endphp
 
                     <div class="text-2xl font-bold text-green-600">
+
                         @if ($days > 0)
                             {{ $days }}d {{ $hours }}h {{ $minutes }}m {{ $seconds }}s
                         @elseif($hours > 0)
@@ -70,14 +81,12 @@
             <div wire:poll.3000ms class="bg-white rounded shadow overflow-x-auto">
 
                 <table class="w-full text-sm">
-
                     <thead class="bg-gray-100">
                         <tr>
                             <th class="p-3 text-center">#</th>
                             <th class="p-3 text-center">Ejemplar</th>
                             <th class="p-3 text-center">Precio</th>
                             <th class="p-3 text-center">Propietario</th>
-                            <th class="p-3 text-center">Acción</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -100,7 +109,6 @@
                                 } else {
                                     $precio_nuevo = $tabla->monto + $parametros->caso4_m;
                                 }
-
                             @endphp
                             <tr class="border-t hover:bg-gray-50">
                                 <td class="p-3 text-center font-bold">
@@ -117,28 +125,6 @@
                                         <span class="text-gray-500">La Casa</span>
                                     @else
                                         {{ $tabla->tabla_usuario->name }}
-                                    @endif
-                                </td>
-
-                                <td class="p-3 text-center">
-                                    @if ($remainingTime > 0)
-                                        @if ($tabla->usuario_id != auth()->user()->id)
-                                            <button
-                                                wire:click="pujar({{ $tabla->remate_id }}, {{ $tabla->numero_ejemplar }})"
-                                                class="bg-[#0F3D2E] text-white px-3 py-2 rounded hover:bg-green-900 text-xs">
-
-                                                Pujar ${{ number_format($precio_nuevo, 2) }}
-
-                                            </button>
-                                        @else
-                                            <span class="bg-[#D4A017] text-white px-3 py-1 rounded text-xs">
-                                                MÍO
-                                            </span>
-                                        @endif
-                                    @else
-                                        <span class="bg-gray-400 text-white px-3 py-1 rounded text-xs">
-                                            Cerrado
-                                        </span>
                                     @endif
                                 </td>
                             </tr>
@@ -175,13 +161,11 @@
             </div>
 
             <div class="text-center">
-
                 <a href="{{ route('remates-admin') }}"
                     class="bg-[#0F3D2E] text-white px-6 py-2 rounded hover:bg-green-900">
                     ← Volver
                 </a>
-
             </div>
         </div>
-    </x-layouts.menu-usuario>
+    </x-layouts.menu-admin>
 </div>

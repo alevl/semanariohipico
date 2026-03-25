@@ -23,6 +23,7 @@ class Polla extends Model
         'incentivo',
         'numero_carreras',
         'observacion',
+        'carreras_programadas',
         'primera_uno',
         'primera_dos',
         'primera_tres',

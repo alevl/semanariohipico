@@ -11,8 +11,6 @@
                 <nav class="p-4 space-y-3">
                     <a href="{{ route('dashboard') }}" class="block hover:bg-green-900 p-2 rounded">🏠 Dashboard</a>
                     <a href="{{ route('gacetas') }}" class="block hover:bg-green-900 p-2 rounded">📄 Gacetas</a>
-                    <a href="#" class="block hover:bg-green-900 p-2 rounded">🐎 Remates</a>
-                    <a href="#" class="block hover:bg-green-900 p-2 rounded">🎯 Pollas Hípicas</a>
                     <a href="{{ route('movimientos') }}" class="block hover:bg-green-900 p-2 rounded">💰 Monedero</a>
                     <a href="{{ route('pronosticos') }}" class="block hover:bg-green-900 p-2 rounded">📊 Pronósticos</a>
                     <a href="{{ route('salir.cierre') }}" class="block text-red-400 p-2 hover:text-red-500">🚪 Cerrar
@@ -22,7 +20,6 @@
 
             <div id="overlay" class="fixed inset-0 bg-black opacity-50 hidden z-30 lg:hidden"></div>
             <div class="flex-1 flex flex-col">
-
                 {{ $slot }}
             </div>
         </div>

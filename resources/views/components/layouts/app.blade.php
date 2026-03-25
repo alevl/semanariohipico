@@ -110,6 +110,14 @@
             )
         })
 
+        Livewire.on('no_puja', function(message) {
+            Swal.fire(
+                'No tiene el saldo suficiente para pujar por ese ejemplar',
+                '',
+                'error'
+            )
+        })
+
         Livewire.onPageExpired((response, message) => {
             location.reload()
         })

@@ -45,10 +45,8 @@
                             {{ $dato->fecha }}
                         </p>
                         <div class="flex gap-2">
-                            <a href="{{ asset('storage/' . $dato->ruta) }}" download
+                            <a href="{{ asset('storage/' . $dato->ruta) }}" target="new"
                                 class="flex-1 bg-[#D4A017] text-white py-2 rounded hover:bg-yellow-500 text-center">Descargar</a>
-                            <a href="{{ asset('storage/' . $dato->ruta) }}"
-                                class="flex-1 border py-2 rounded hover:bg-gray-100 text-center">Ver</a>
                         </div>
                     </div>
                 @endforeach

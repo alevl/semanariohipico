@@ -26,7 +26,7 @@
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                         <div class="bg-white p-4 rounded shadow">
                             <div class="text-gray-500">Remates activos</div>
-                            <div class="text-3xl font-bold">12</div>
+                            <div class="text-3xl font-bold">{{ count($remates_abiertos) }}</div>
                         </div>
                         <div class="bg-white p-4 rounded shadow">
                             <div class="text-gray-500">Pollas disponibles</div>
@@ -34,7 +34,7 @@
                         </div>
                         <div class="bg-white p-4 rounded shadow">
                             <div class="text-gray-500">Gacetas disponibles</div>
-                            <div class="text-3xl font-bold">3</div>
+                            <div class="text-3xl font-bold">{{ $gacetas_disponibles }}</div>
                         </div>
                         <div class="bg-white p-4 rounded shadow">
                             <div class="text-gray-500">Saldo monedero</div>
@@ -46,7 +46,7 @@
 
                     <div class="bg-white rounded shadow p-6">
                         <h2 class="text-xl font-bold mb-4">
-                            🐎 Remates disponibles
+                            Remates disponibles
                         </h2>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             @foreach ($remates_disponibles as $remate)
@@ -54,13 +54,16 @@
                                     <h3 class="font-bold">
                                         {{ $remate->hipodromo }} ({{ $remate->fecha }})
                                     </h3>
-                                    <p class="mt-2">
+                                    <p class="mt-2 ">
                                         Carrera:
                                         <b>{{ $remate->carrera }}</b>
                                     </p>
-                                    <button class="mt-3 bg-[#D4A017] text-white px-4 py-2 rounded w-full">
-                                        Ver remate
-                                    </button>
+                                    <p class="mt-4 ">
+                                        <a href="{{ route('remates-posiciones', $remate->id) }}"
+                                            class="cursor-pointer mt-3 bg-[#D4A017] text-white px-4 py-2 rounded w-full">
+                                            Ver Remate
+                                        </a>
+                                    </p>
                                 </div>
                             @endforeach
                         </div>
@@ -68,97 +71,62 @@
 
                     <div class="bg-white rounded shadow p-6">
                         <h2 class="text-xl font-bold mb-6">
-                            🎯 Pollas Hípicas
+                            Pollas Hípicas
                         </h2>
                         <div class="flex border-b mb-6">
                             <button id="btn-disponibles" onclick="mostrarTab('disponibles')"
                                 class="tab-btn tab-activo px-4 py-2 font-semibold border-b-2">
                                 Pollas Disponibles
                             </button>
-                            <button id="btn-inscritas" onclick="mostrarTab('inscritas')"
-                                class="tab-btn tab-inactivo px-4 py-2 font-semibold border-b-2">
-                                Mis Pollas Inscritas
-                            </button>
                         </div>
-
                         <div id="tab-disponibles">
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 @foreach ($pollas_abiertas as $datos)
                                     <div class="border rounded-lg p-5 hover:shadow-lg transition">
                                         <div class="flex justify-between items-center mb-2">
                                             <h3 class="font-bold text-lg">
-                                                {{ $datos->hipodromo }}
+                                                {{ $datos->hipodromo . ' (' . $datos->fecha . ')' }}
                                             </h3>
-                                            <span class="text-sm text-gray-500">
-                                                {{ $datos->fecha }}
-                                            </span>
                                         </div>
-                                        <div class="text-gray-500 text-sm">
-                                            Inscripción
-                                        </div>
-                                        <div class="text-2xl font-bold text-[#D4A017] mb-3">
-                                            ${{ $datos->inscripcion }}
-                                        </div>
-                                        <button class="w-full bg-[#0F3D2E] text-white py-2 rounded hover:bg-green-900">
-                                            Inscribirse
-                                        </button>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-
-                        <div id="tab-inscritas" class="hidden">
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                @foreach ($pollas_inscritas as $datos)
-                                    @if ($datos->estatus_polla == 2)
-                                        <div class="border rounded-lg p-5 bg-green-50 hover:shadow-lg transition">
-                                            <div class="flex justify-between items-center mb-2">
-                                                <h3 class="font-bold text-lg">
-                                                    {{ $datos->hipodromo }}
-                                                </h3>
-                                                <span class="text-sm text-gray-500">
-                                                    {{ $datos->fecha }}
-                                                </span>
-                                            </div>
+                                        @php $sw=0 @endphp
+                                        @foreach ($pollas_inscritas as $inscri)
+                                            @if ($datos->id == $inscri->polla_id)
+                                                @php $sw=1 @endphp
+                                            @endif
+                                        @endforeach
+                                        @if ($sw == 0)
                                             <div class="text-gray-500 text-sm">
                                                 Inscripción
                                             </div>
-                                            <div class="text-2xl font-bold text-[#D4A017] mb-3">
+                                            <div class="text-2xl font-bold text-[#0F3D2E] mb-3">
                                                 ${{ $datos->inscripcion }}
                                             </div>
-                                            <div class="flex gap-2">
-                                                <button
-                                                    class="flex-1 bg-[#0F3D2E] text-white py-2 rounded hover:bg-green-900">
-                                                    Modificar Marcas
-                                                </button>
-                                            </div>
-                                        </div>
-                                    @else
-                                        @if ($datos->estatus_polla == 3 or $datos->estatus_polla == 4)
-                                            <div class="border rounded-lg p-5 bg-green-50 hover:shadow-lg transition">
-                                                <div class="flex justify-between items-center mb-2">
-                                                    <h3 class="font-bold text-lg">
-                                                        {{ $datos->hipodromo }}
-                                                    </h3>
-                                                    <span class="text-sm text-gray-500">
-                                                        {{ $datos->fecha }}
-                                                    </span>
+
+                                            <button wire:click="$dispatch('inscribirPolla', {{ $datos->id }})"
+                                                wire:loading.attr="disabled"
+                                                class="w-full bg-[#0F3D2E] text-white py-2 rounded hover:bg-green-900">
+                                                Inscribirse
+                                            </button>
+                                        @else
+                                            @if ($datos->estatus_id == 2)
+                                                <div class="mt-4">
+                                                    <a href="{{ route('sellar-polla', $datos->id) }}"
+                                                        class="mt-4 cursor-pointer w-full bg-[#0F3D2E] text-white py-2 rounded hover:bg-green-900 pr-2 pl-2">
+                                                        Sellar o Modificar Marcas
+                                                    </a>
                                                 </div>
-                                                <div class="text-gray-500 text-sm">
-                                                    Inscripción
-                                                </div>
-                                                <div class="text-2xl font-bold text-[#D4A017] mb-3">
-                                                    ${{ $datos->inscripcion }}
-                                                </div>
-                                                <div class="flex gap-2">
-                                                    <button
-                                                        class="flex-1 bg-[#0F3D2E] text-white py-2 rounded hover:bg-green-900">
-                                                        Ver Tabla
-                                                    </button>
-                                                </div>
-                                            </div>
+                                            @else
+                                                @if ($datos->estatus_id == 3 or $datos->estatus_id == 4 or $datos->estatus_id == 5)
+                                                    <div class="mt-4">
+                                                        <a href="{{ route('posiciones-polla', $datos->id) }}"
+                                                            class="mt-4 cursor-pointer w-full bg-[#0F3D2E] text-white py-2 rounded hover:bg-green-900 pr-2 pl-2">
+                                                            Tabla de Posiciones
+                                                        </a>
+                                                    </div>
+                                                @endif
+                                            @endif
                                         @endif
-                                    @endif
+                                    </div>
                                 @endforeach
                             </div>
                         </div>
@@ -194,24 +162,96 @@
         </div>
     </x-layouts.menu-usuario>
 </div>
-<script>
-    function mostrarTab(tab) {
-        // ocultar contenido
-        document.getElementById('tab-disponibles').classList.add('hidden')
-        document.getElementById('tab-inscritas').classList.add('hidden')
+@push('js')
+    <script src="sweetalert2.all.min.js"></script>
+    <script>
+        Livewire.on('inscribirPolla', pollaId => {
+            Swal.fire({
+                    title: "¿Está seguro de participar en la polla hípica?",
+                    text: "",
+                    icon: 'warning',
+                    cancelButtonText: "{{ __('Cancelar') }}",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: "¡{{ __('Si, estoy seguro') }}!"
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        @this.call('inscripcion_polla', pollaId)
 
-        // mostrar seleccionado
-        document.getElementById('tab-' + tab).classList.remove('hidden')
+                        Swal.fire(
+                            '',
+                            "{{ __('Polla inscrita') }}",
+                            'success'
+                        )
+                    }
+                })
+        });
 
-        // reset botones
-        document.getElementById('btn-disponibles').classList.remove('tab-activo')
-        document.getElementById('btn-inscritas').classList.remove('tab-activo')
+        function mostrarTab(tab) {
+            // ocultar contenido
+            document.getElementById('tab-disponibles').classList.add('hidden')
+            document.getElementById('tab-inscritas').classList.add('hidden')
 
-        document.getElementById('btn-disponibles').classList.add('tab-inactivo')
-        document.getElementById('btn-inscritas').classList.add('tab-inactivo')
+            // mostrar seleccionado
+            document.getElementById('tab-' + tab).classList.remove('hidden')
 
-        // activar seleccionado
-        document.getElementById('btn-' + tab).classList.remove('tab-inactivo')
-        document.getElementById('btn-' + tab).classList.add('tab-activo')
-    }
-</script>
+            // reset botones
+            document.getElementById('btn-disponibles').classList.remove('tab-activo')
+            document.getElementById('btn-inscritas').classList.remove('tab-activo')
+
+            document.getElementById('btn-disponibles').classList.add('tab-inactivo')
+            document.getElementById('btn-inscritas').classList.add('tab-inactivo')
+
+            // activar seleccionado
+            document.getElementById('btn-' + tab).classList.remove('tab-inactivo')
+            document.getElementById('btn-' + tab).classList.add('tab-activo')
+        }
+    </script>
+@endpush
+@if (session('actualizada') == 'ok')
+    <script>
+        Swal.fire(
+            '',
+            'Polla actualizada',
+            'success'
+        )
+    </script>
+@endif
+@if (session('inscripcion') == 'ok')
+    <script>
+        Swal.fire(
+            '',
+            'Apuesta inscrita',
+            'success'
+        )
+    </script>
+@endif
+@if (session('monedero') == 'no')
+    <script>
+        Swal.fire(
+            '',
+            'No tiene el saldo suficiente para sella la apuesta',
+            'error'
+        )
+    </script>
+@endif
+@if (session('quiniela') == 'no')
+    <script>
+        Swal.fire(
+            '',
+            'La inscripción de la apuesta está cerrada. Disculpe las molestias ocasionadas',
+            'error'
+        )
+    </script>
+@endif
+@if (session('procede') == 'no')
+    <script>
+        Swal.fire(
+            '',
+            'Ya está inscrito. Haga sus pronósticos',
+            'info'
+        )
+    </script>
+@endif

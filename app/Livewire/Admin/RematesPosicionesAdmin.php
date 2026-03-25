@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Livewire\Usuario;
+namespace App\Livewire\Admin;
 
 use Livewire\Component;
 use App\Models\User;
-use App\Models\UserMovimiento;
+use App\Models\UsersMovimiento;
 use App\Models\Remate;
 use App\Models\RematesDetalle;
 use App\Models\RematesParametro;
 use Carbon\Carbon;
 
-class RematesPosiciones extends Component
+class RematesPosicionesAdmin extends Component
 {
     public $id_remate;
     public $monedero;
@@ -20,7 +20,7 @@ class RematesPosiciones extends Component
 
     public function mount($id_remate)
     {
-        if(auth()->user()->nivel_id <> 1)
+        if(auth()->user()->nivel_id <> 2)
         {
             session()->flush();
             return redirect()->route('login');
@@ -83,7 +83,7 @@ class RematesPosiciones extends Component
             $usu_nuevo = User::where('id', auth()->user()->id)->update([
                 'monedero' => User::raw('monedero - '. $precio_nuevo),
             ]);
-            $crear = UserMovimiento::create([
+            $crear = UsersMovimiento::create([
             'usuario_id' => auth()->user()->id,
             'fecha' => $fecha_recarga,
             'fecha_invertida' => $fecha_invertida_recarga,
@@ -97,7 +97,7 @@ class RematesPosiciones extends Component
                 $usu_viejo = User::where('id', $propietario_viejo)->update([
                     'monedero' => User::raw('monedero + '. $precio_viejo),
                 ]);
-                $crear = UserMovimiento::create([
+                $crear = UsersMovimiento::create([
                 'usuario_id' => $propietario_viejo,
                 'fecha' => $fecha_recarga,
                 'fecha_invertida' => $fecha_invertida_recarga,
@@ -128,7 +128,11 @@ class RematesPosiciones extends Component
         Carbon::now('America/Caracas')->format('Y-m-d H:i:s');
         $this->updateRemainingTime();
 
-        $usuario = User::where('id', auth()->user()->id)->first();
+        $this->monedero = User::
+        select('users.*','monedas.*')
+        ->join('monedas', 'monedas.id','=','users.moneda_id')
+        ->where('users.id', auth()->user()->id)
+        ->first();
 
         $remate = Remate::where('id', $this->id_remate)->first();
 
@@ -138,7 +142,7 @@ class RematesPosiciones extends Component
 
         $parametros = RematesParametro::where('id', 1)->first();
 
-        return view('livewire.usuario.remates-posiciones', compact('usuario'))->with('tabla_remate', $tabla_remate)->with('remate', $remate)->with('parametros', $parametros);
+        return view('livewire.admin.remates-posiciones-admin')->with('tabla_remate', $tabla_remate)->with('remate', $remate)->with('parametros', $parametros);
     }
 
     public function updateRemainingTime()

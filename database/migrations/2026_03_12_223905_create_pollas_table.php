@@ -24,7 +24,7 @@ return new class extends Migration
             $table->Integer('inscritos')->nullable();
             $table->Integer('comision')->nullable();
             $table->Integer('incentivo')->nullable();
-            $table->Integer('numero_carreras')->nullable();
+            $table->Integer('carreras_programadas')->nullable();
             $table->string('observacion', 255)->nullable();
 
             $table->Integer('primera_uno')->nullable();
