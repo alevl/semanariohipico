@@ -19,6 +19,7 @@
                     <a href="{{ route('transmisiones-admin') }}"
                         class="block hover:bg-green-900 p-2 rounded">Transmisiones</a>
                     <a href="{{ route('usuarios-admin') }}" class="block hover:bg-green-900 p-2 rounded">Usuarios</a>
+                    <a href="{{ route('perfil-admin') }}" class="block hover:bg-green-900 p-2 rounded">Perfil</a>
                     <a href="{{ route('salir.cierre') }}" class="block text-red-400 p-2 hover:text-red-500">Cerrar
                         Sesión</a>
                 </nav>

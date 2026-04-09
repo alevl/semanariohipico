@@ -133,13 +133,12 @@
                     </div>
                 </div>
 
-                {{-- PUBLICIDAD --}}
                 <div class="lg:col-span-1">
                     <div class="space-y-6 lg:sticky lg:top-6">
-                        <div class="bg-white rounded shadow h-40 flex items-center justify-center border">
-                            <span class="text-gray-500 font-semibold">
-                                Publicidad
-                            </span>
+                        <div class="bg-black rounded shadow h-40 flex items-center justify-center border">
+                            <a href="https://quinielaselbrujo.com" target="new"><img
+                                    src="{{ asset('storage/publicidad/brujo.png') }}" alt="El Brujo"
+                                    class="w-full h-40 rounded"></a>
                         </div>
                         <div class="bg-white rounded shadow h-40 flex items-center justify-center border">
                             <span class="text-gray-500 font-semibold">

@@ -6,8 +6,8 @@
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
         <div class="min-h-screen bg-[#f5f5f5] p-6">
-            <button id="menuBtn" class="lg:hidden text-2xl">☰</button>
             <div class="flex justify-between items-center mb-6">
+                <button id="menuBtn" class="lg:hidden text-2xl">☰</button>
                 <h1 class="text-2xl font-bold text-gray-800">Remates</h1>
                 <span class="px-4 py-2 text-sm">
                     <button wire:click="$set('open_crear', true)"

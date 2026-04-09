@@ -12,7 +12,10 @@
                     <a href="{{ route('dashboard') }}" class="block hover:bg-green-900 p-2 rounded">🏠 Dashboard</a>
                     <a href="{{ route('gacetas') }}" class="block hover:bg-green-900 p-2 rounded">📄 Gacetas</a>
                     <a href="{{ route('movimientos') }}" class="block hover:bg-green-900 p-2 rounded">💰 Monedero</a>
-                    <a href="{{ route('pronosticos') }}" class="block hover:bg-green-900 p-2 rounded">📊 Pronósticos</a>
+                    <a href="{{ route('pronosticos') }}" class="block hover:bg-green-900 p-2 rounded">⭐ Pronósticos</a>
+                    <a href="{{ route('transmisiones') }}" class="block hover:bg-green-900 p-2 rounded">🎥
+                        Transmisiones</a>
+                    <a href="{{ route('perfil') }}" class="block hover:bg-green-900 p-2 rounded">👤 Perfil</a>
                     <a href="{{ route('salir.cierre') }}" class="block text-red-400 p-2 hover:text-red-500">🚪 Cerrar
                         Sesión</a>
                 </nav>

@@ -1,8 +1,8 @@
 <div>
     <x-layouts.menu-admin>
         <div class="min-h-screen bg-[#f5f5f5] p-6">
-            <button id="menuBtn" class="lg:hidden text-2xl">☰</button>
             <div class="flex justify-between items-center mb-6">
+                <button id="menuBtn" class="lg:hidden text-2xl">☰</button>
                 <h1 class="text-2xl font-bold text-gray-800">Transmisiones</h1>
                 <span class="px-4 py-2 text-sm">
                     <button wire:click="$set('open_crear', true)"
@@ -54,26 +54,12 @@
             </x-slot>
 
             <x-slot name="content">
-
                 <div class="mb-4">
-                    <x-label value="Hipódromo" />
-
-                    <select class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#D4A017]"
-                        wire:model="hipodromo_id">
-
-                        <option value="">Seleccione...</option>
-                        <option value="47">4 Pantallas 1</option>
-                        <option value="48">4 Pantallas 2</option>
-                        <option value="49">Canal Hípico</option>
-
-                        @foreach ($lista_hipodromos as $hipo)
-                            <option value="{{ $hipo->id }}">
-                                {{ $hipo->hipodromo }}
-                            </option>
-                        @endforeach
-                    </select>
-
-                    <x-input-error for="hipodromo_id" />
+                    <x-label value="Canal" />
+                    <x-input type="text"
+                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#D4A017]"
+                        wire:model.defer="canal" />
+                    <x-input-error for="canal" />
                 </div>
 
                 <div class="mb-4">

@@ -1,0 +1,71 @@
+<?php
+
+namespace App\Livewire\Admin;
+
+use Livewire\Component;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
+class PerfilAdmin extends Component
+{
+    public $username, $name, $telefono;
+    public $password1, $password2, $monedero;
+
+    public function mount()
+    {
+        if(auth()->user()->nivel_id <> 2)
+        {
+            session()->flush();
+            return redirect()->route('login');
+        }
+    }
+
+    public function render()
+    {
+        $usuario = User::where('id', auth()->user()->id)->first();
+
+        $this->username = $usuario->username;
+        $this->name = $usuario->name;
+        $this->telefono = $usuario->telefono;
+
+        return view('livewire.admin.perfil-admin', compact('usuario'));
+    }
+
+    public function actualizar()
+    {
+        $this->validate([
+            'name' => 'required|max:45',
+            'telefono' => 'max:20',
+        ]);
+
+        $actualizar = User::where('id', auth()->user()->id)
+        ->update([
+            'name' => $this->name,
+            'telefono' => $this->telefono,
+        ]);
+
+        $this->dispatch('alert');
+    }
+
+    public function actualizar_clave()
+    {
+        $this->validate([
+            'password1' => 'required|max:255',
+            'password2' => 'required|max:255',
+        ]);
+
+        if($this->password1 <> $this->password2)
+        {
+            $this->dispatch('no_coinciden');
+        }
+        else
+        {
+            $actualizar = User::where('id', auth()->user()->id)
+            ->update([
+                'password' => Hash::make($this->password1)
+            ]);
+    
+            $this->dispatch('alert');
+        }
+    }
+}

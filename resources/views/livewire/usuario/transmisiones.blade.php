@@ -1,14 +1,19 @@
 <div>
     <x-layouts.menu-usuario>
         <div class="bg-white shadow p-4 flex justify-between items-center">
-            <input type="text"older="Buscar carrera..." class="border rounded px-4 py-2 w-1/3">
+            <div class="flex items-center gap-4">
+                <button id="menuBtn" class="lg:hidden text-2xl">
+                    ☰
+                </button>
+                <h1 class="font-bold text-[#0F3D2E]">
+                    Semanario Hípico
+                </h1>
+            </div>
             <div class="flex items-center gap-6">
-                <div class="font-semibold">
-                    {{ "💰 $ " . number_format($usuario->monedero, 0) }}
+                <div class="bg-[#D4A017] text-white px-3 py-1 rounded font-semibold">
+                    {{ "💰 $" . number_format($usuario->monedero, 0) }}
                 </div>
                 <div>
-                </div>
-                <div class="font-semibold">
                     {{ $usuario->name }}
                 </div>
             </div>

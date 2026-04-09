@@ -18,6 +18,7 @@ use App\Livewire\Usuario\PollaSellar;
 use App\Livewire\Usuario\PollasPosiciones;
 use App\Livewire\Usuario\Remates;
 use App\Livewire\Usuario\RematesPosiciones;
+use App\Livewire\Usuario\Perfil;
 
 use App\Livewire\Admin\DashboardAdmin;
 use App\Livewire\Admin\TransmisionesAdmin;
@@ -30,8 +31,10 @@ use App\Livewire\Admin\RematesPosicionesAdmin;
 use App\Livewire\Admin\UsuariosAdmin;
 use App\Livewire\Admin\PollaCargarCarrerasAdmin;
 use App\Livewire\Admin\PollasPosicionesAdmin;
+use App\Livewire\Admin\PerfilAdmin;
 
 use App\Livewire\SuperAdmin\DashboardSuperAdmin;
+use App\Livewire\SuperAdmin\PerfilSuperadmin;
 
 // LOGIN
 Route::get('/turuta', function(){
@@ -58,6 +61,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('movimientos', Movimientos:
 Route::middleware(['auth:sanctum', 'verified'])->get('sellar-polla/{id_polla}', PollaSellar::class)->name('sellar-polla');
 Route::middleware(['auth:sanctum', 'verified'])->get('posiciones-polla/{id_polla}', PollasPosiciones::class)->name('posiciones-polla');
 Route::middleware(['auth:sanctum', 'verified'])->get('remates-posiciones/{id_remate}', RematesPosiciones::class)->name('remates-posiciones');
+Route::middleware(['auth:sanctum', 'verified'])->get('perfil', Perfil::class)->name('perfil');
 
 // MENU ADMIN
 Route::middleware(['auth:sanctum', 'verified'])->get('dashboard-admin', DashboardAdmin::class)->name('dashboard-admin');
@@ -71,6 +75,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('remates-posiciones-admin/{
 Route::middleware(['auth:sanctum', 'verified'])->get('usuarios-admin', UsuariosAdmin::class)->name('usuarios-admin');
 Route::middleware(['auth:sanctum', 'verified'])->get('pollas-posiciones-admin/{id_polla}', PollasPosicionesAdmin::class)->name('pollas-posiciones-admin');
 Route::middleware(['auth:sanctum', 'verified'])->get('polla-cargar-carreras-admin/{id_polla}', PollaCargarCarrerasAdmin::class)->name('polla-cargar-carreras-admin');
+Route::middleware(['auth:sanctum', 'verified'])->get('perfil-admin', PerfilAdmin::class)->name('perfil-admin');
 
 // MENU SUPER ADMIN
 Route::middleware(['auth:sanctum', 'verified'])->get('dashboard-super-admin', DashboardSuperAdmin::class)->name('dashboard-super-admin');
+Route::middleware(['auth:sanctum', 'verified'])->get('perfil-superadmin', PerfilSuperadmin::class)->name('dashboard-superadmin');

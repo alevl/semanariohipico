@@ -14,6 +14,12 @@ class Transmisiones extends Component
     {
         date_default_timezone_set('America/Caracas');
         $this->fecha_invertida = date('Ymd');
+
+        if(auth()->user()->nivel_id <> 1)
+        {
+            session()->flush();
+            return redirect()->route('login');
+        }
     }
 
     public function render()

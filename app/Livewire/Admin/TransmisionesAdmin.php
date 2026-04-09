@@ -8,7 +8,7 @@ use App\Models\Hipodromo;
 
 class TransmisionesAdmin extends Component
 {
-    public $hipodromo_id, $ruta, $lista_hipodromos=[];
+    public $canal, $ruta;
 
     public $open_crear = false;
 
@@ -16,8 +16,6 @@ class TransmisionesAdmin extends Component
 
     public function mount()
     {
-        $this->lista_hipodromos = Hipodromo::orderBy('hipodromo', 'asc')->get();
-
         if(auth()->user()->nivel_id <> 2)
         {
             session()->flush();
@@ -36,7 +34,7 @@ class TransmisionesAdmin extends Component
     public function save()
     {
         $this->validate([
-            'hipodromo_id' => 'required|max:30',
+            'canal' => 'required|max:20',
             'ruta' => 'required|max:100',
         ]);
 
@@ -45,13 +43,13 @@ class TransmisionesAdmin extends Component
         $fecha_invertida = date('Ymd');
 
         $rut = Transmisione::create([
-            'hipodromo_id' => $this->hipodromo_id,
+            'canal' => $this->canal,
             'fecha' => $fecha,
             'fecha_invertida' => $fecha_invertida,
             'ruta' => $this->ruta,
         ]);
 
-        $this->reset(['open_crear', 'hipodromo_id', 'ruta']);
+        $this->reset(['open_crear', 'canal', 'ruta']);
 
         $this->dispatch('render');
         $this->dispatch('alert');
